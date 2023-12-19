@@ -1,4 +1,4 @@
-function New-CoveApiCredentials {
+function New-CoveApiCredential {
     <#
     .SYNOPSIS
         Sets the credentials for the Cove API
@@ -18,7 +18,7 @@ function New-CoveApiCredentials {
             Password = 'supersecurepassword' | ConvertTo-SecureString -AsPlainText -Force
             Partner = 'PartnerName (admin@partnerdomain.tld)'
         }
-        New-CoveApiCredentials @creds
+        New-CoveApiCredential @creds
         Stores the required attributes for the Cove API to use in future calls
     .EXAMPLE
         $creds = @{
@@ -27,18 +27,18 @@ function New-CoveApiCredentials {
             Partner = 'PartnerName (admin@partnerdomain.tld)'
             Url = 'https://api.backup.management/jsonapi'
         }
-        New-CoveApiCredentials @creds
+        New-CoveApiCredential @creds
         Overrides the default URL for the Cove API and stores the required attributes for the Cove API to use in future calls
-       
+
     #>
-    
-    
-    [CmdletBinding()]
+
+
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Username for the API
         [Parameter(Mandatory = $true)]
         [string]$User,
-        # Password for the API  
+        # Password for the API
         [Parameter(Mandatory = $true)]
         [securestring]$Password,
         # Partner name displayed in the Cove portal
@@ -48,12 +48,12 @@ function New-CoveApiCredentials {
         [Parameter()]
         [string]$Url = "https://api.backup.management/jsonapi"
     )
-    
-    
+
+
     begin {
-        
+
     }
-    
+
     process {
         if (!$User) {
             $User = Read-Host -Prompt "Enter the username for the Cove API"
@@ -64,7 +64,7 @@ function New-CoveApiCredentials {
         if (!$Partner) {
             $Partner = Read-Host -Prompt "Enter the partner name displayed in the Cove portal"
         }
-        
+
         $Script:creds = @{
             User = $User
             Password = $Password
@@ -73,9 +73,9 @@ function New-CoveApiCredentials {
         }
 
         Set-Variable -Name CoveApiCredentials -Value $script:creds -Scope Script -Visibility Private -Force
-        
+
     }
-    
+
     end {
         Remove-Variable -Name creds -Scope Script -Force
     }
