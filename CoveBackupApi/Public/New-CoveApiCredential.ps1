@@ -33,7 +33,7 @@ function New-CoveApiCredential {
     #>
     
     
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     param (
         # Username for the API
         [Parameter(Mandatory = $true)]
