@@ -29,16 +29,16 @@ function New-CoveApiCredential {
         }
         New-CoveApiCredential @creds
         Overrides the default URL for the Cove API and stores the required attributes for the Cove API to use in future calls
-       
+
     #>
-    
-    
+
+
     [CmdletBinding(SupportsShouldProcess)]
     param (
         # Username for the API
         [Parameter(Mandatory = $true)]
         [string]$User,
-        # Password for the API  
+        # Password for the API
         [Parameter(Mandatory = $true)]
         [securestring]$Password,
         # Partner name displayed in the Cove portal
@@ -48,12 +48,12 @@ function New-CoveApiCredential {
         [Parameter()]
         [string]$Url = "https://api.backup.management/jsonapi"
     )
-    
-    
+
+
     begin {
-        
+
     }
-    
+
     process {
         if (!$User) {
             $User = Read-Host -Prompt "Enter the username for the Cove API"
@@ -64,7 +64,7 @@ function New-CoveApiCredential {
         if (!$Partner) {
             $Partner = Read-Host -Prompt "Enter the partner name displayed in the Cove portal"
         }
-        
+
         $Script:creds = @{
             User = $User
             Password = $Password
@@ -73,9 +73,9 @@ function New-CoveApiCredential {
         }
 
         Set-Variable -Name CoveApiCredentials -Value $script:creds -Scope Script -Visibility Private -Force
-        
+
     }
-    
+
     end {
         Remove-Variable -Name creds -Scope Script -Force
     }

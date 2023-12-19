@@ -8,19 +8,19 @@ function New-CoveApiSession {
         New-CoveApiSession -Verbose
         Initiates a login session with the Cove API and outputs the result to the console
     #>
-    
-    
+
+
     [CmdletBinding(SupportsShouldProcess)]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingUsernameAndPasswordParams', '')]
     param (
-        
+
     )
-    
+
     begin {
     }
-    
+
     process {
-        
+
         if (Test-CoveApiVisa) {
             Write-Verbose "Visa found, no need to login"
             return
@@ -80,8 +80,8 @@ function New-CoveApiSession {
         Write-Verbose "Login successful, visa valid from $($Script:CoveApiSession.validfrom)"
 
     }
-    
+
     end {
-        
+
     }
 }

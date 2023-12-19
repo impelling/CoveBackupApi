@@ -3,7 +3,7 @@ function Invoke-CoveApiRequest {
     .SYNOPSIS
         Performs a request to the Cove API
     .DESCRIPTION
-        
+
     .NOTES
         Information or caveats about the function e.g. 'This function is not supported in Linux'
     .LINK
@@ -12,8 +12,8 @@ function Invoke-CoveApiRequest {
         Test-MyTestFunction -Verbose
         Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
     #>
-    
-    
+
+
     [CmdletBinding()]
     param (
         # The request method to call
@@ -31,16 +31,16 @@ function Invoke-CoveApiRequest {
         # The id of the request to pass
         [Parameter()]
         [string]$Id = 2
-        
+
     )
-    
+
     begin {
         if (!(Test-CoveApiVisa)) {
             New-CoveApiSession
         }
-        
+
     }
-    
+
     process {
         $RequestParams = @{
             ContentType = 'application/json'
@@ -93,8 +93,8 @@ function Invoke-CoveApiRequest {
         Write-Verbose "No data returned from $CoveMethod via $Method"
 
     }
-    
+
     end {
-        
+
     }
 }

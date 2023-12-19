@@ -10,13 +10,13 @@ function Test-CoveApiVisa {
     #>
     [CmdletBinding()]
     param (
-        
+
     )
-    
+
     begin {
 
     }
-    
+
     process {
         if (!$Script:CoveApiSession) {
             Write-Verbose "No visa found"
@@ -27,10 +27,10 @@ function Test-CoveApiVisa {
             return $null
         }
         Write-Verbose "Visa found, valid until $(($Script:CoveApiSession.validfrom).AddMinutes(15))"
-        return $true
+        return
     }
-    
+
     end {
-        
+
     }
 }

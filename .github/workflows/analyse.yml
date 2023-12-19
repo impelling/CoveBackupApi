@@ -2,14 +2,14 @@ name: Analyse code validity
 
 on:
   push:
-    branches: [ 
+    branches: [
       main,
-      staging 
+      staging
     ]
   pull_request:
-    branches: [ 
+    branches: [
       main,
-      staging 
+      staging
     ]
 
 jobs:
@@ -27,4 +27,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: results.sarif
-
