@@ -1,0 +1,31 @@
+name: Analyse code validity
+
+on:
+  push:
+    branches: [ 
+      main,
+      staging 
+    ]
+  pull_request:
+    branches: [ 
+      main,
+      staging 
+    ]
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Analyse code validity in container
+        uses: microsoft/psscriptanalyzer-action@v1.1
+        with:
+          path: CoveBackupApi
+          recurse: true
+          output: results.sarif
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
+```
+
