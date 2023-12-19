@@ -28,7 +28,7 @@ function Get-CovePartnerInfo {
         if ($Data) {
             return $Data
         }
-        Write-Error "Failed to get partner info"
+        Throw "Failed to get partner info"
     }
 
     end {
