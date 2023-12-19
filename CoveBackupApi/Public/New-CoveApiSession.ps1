@@ -5,13 +5,12 @@ function New-CoveApiSession {
     .DESCRIPTION
         Checks for an existing visa and if none is found, initiates a login session with the Cove API
     .EXAMPLE
-        Test-MyTestFunction -Verbose
-        Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
+        New-CoveApiSession -Verbose
+        Initiates a login session with the Cove API and outputs the result to the console
     #>
     
     
     [CmdletBinding()]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', '')]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingUsernameAndPasswordParams', '')]
     param (
         
@@ -27,7 +26,7 @@ function New-CoveApiSession {
             return
         }
         if (!$Script:CoveApiCredentials) {
-            Write-Output "No credentials found, please run New-CoveApiCredentials to set the credentials for Cove API"
+            Write-Output "No credentials found, please run New-CoveApiCredential to set the credentials for Cove API"
             return $null
         }
 
