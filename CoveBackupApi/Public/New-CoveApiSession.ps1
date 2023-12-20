@@ -79,6 +79,13 @@ function New-CoveApiSession {
 
         Write-Verbose "Login successful, visa valid from $($Script:CoveApiSession.validfrom)"
 
+        try {
+            $Script:CoveApiSession.PartnerInfo = Get-CovePartnerInfo
+        }
+        catch {
+            Throw "Failed to get partner info: $($_.Exception.Message)"
+        }
+
     }
 
     end {
