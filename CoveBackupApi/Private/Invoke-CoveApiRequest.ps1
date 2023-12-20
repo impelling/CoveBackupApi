@@ -36,7 +36,7 @@ function Invoke-CoveApiRequest {
 
     begin {
         if (!(Test-CoveApiVisa)) {
-            New-CoveApiSession
+                        New-CoveApiSession
         }
 
     }
@@ -51,7 +51,7 @@ function Invoke-CoveApiRequest {
                 id = $Id
                 visa = $Script:CoveApiSession.visa
                 params = $Params
-            } | ConvertTo-Json
+            } | ConvertTo-Json -Depth 20
             Uri = $UrlOverride ? $UrlOverride : $Script:CoveApiCredentials.Url
             UseBasicParsing = $true
             SessionVariable = 'CoveSession'
@@ -60,26 +60,29 @@ function Invoke-CoveApiRequest {
             $Request = Invoke-WebRequest @RequestParams
         }
         catch {
+            Write-Debug "Request to $CoveMethod via $Method $($Request | ConvertTo-Json -Depth 10)"
             Throw "Failed to access $CoveMethod via $Method with: $($_.Exception.Message)"
         }
 
-        Write-Debug "Request to $CoveMethod via $Method $($Request | ConvertTo-Json -Depth 10)"
 
         if ($Request.StatusCode -ne 200) {
-            Throw "Failed to access the $CoveMethod via $Method with: $($Request.StatusCode) - $($Request.StatusDescription)"
+            Write-Debug "Request to $CoveMethod via $Method $($Request | ConvertTo-Json -Depth 10)"
+            Throw "Failed to access $CoveMethod via $Method with: $($Request.StatusCode) - $($Request.StatusDescription)"
         }
 
         try {
             $Response = $Request | ConvertFrom-Json
         }
         catch {
+            Write-Debug "Request to $CoveMethod via $Method $($Request | ConvertTo-Json -Depth 10)"
             Throw "Failed to parse the response from $CoveMethod via $Method with: $($_.Exception.Message)"
         }
 
-        Write-Debug "Response from $CoveMethod via $Method $($Response | ConvertTo-Json -Depth 10)"
 
 
         if ($Response.error) {
+            Write-Debug "Request to $CoveMethod via $Method $($Request | ConvertTo-Json -Depth 10)"
+            Write-Debug "Response from $CoveMethod via $Method $($Response | ConvertTo-Json -Depth 10)"
             Throw "Failed to access $CoveMethod via $Method with: $($Response.error.message)"
         }
 
