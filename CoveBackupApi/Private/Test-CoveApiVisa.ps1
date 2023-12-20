@@ -27,7 +27,7 @@ function Test-CoveApiVisa {
             return $null
         }
         Write-Verbose "Visa found, valid until $(($Script:CoveApiSession.validfrom).AddMinutes(15))"
-        return
+        return $true
     }
 
     end {
