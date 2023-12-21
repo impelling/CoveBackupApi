@@ -1,14 +1,14 @@
-function Get-CoveDeviceStatastic {
+function Get-CoveDeviceStatistic {
     <#
     .SYNOPSIS
         Gets devices from the Cove API
     .DESCRIPTION
         Gets devices from the Cove API, using the credentials stored in the script
     .EXAMPLE
-        Get-CoveDeviceStatastic -Verbose
+        Get-CoveDeviceStatistic -Verbose
         Gets devices from the Cove API
     .EXAMPLE
-        Get-CoveDeviceStatastic -PartnerId 1234 -Verbose
+        Get-CoveDeviceStatistic -PartnerId 1234 -Verbose
         Gets devices from the Cove API for the partner with ID 1234
     #>
     [CmdletBinding()]
@@ -30,16 +30,19 @@ function Get-CoveDeviceStatastic {
         $ColumnHeaders = Get-CoveDataMap -DataMap ColumnHeaders
         $DataSources = Get-CoveDataMap -DataMap DataSources
 
-        if ($M365) {
-            $Filter = "$($ColumnHeaders| Where-Object {$_.Value -eq 'Account Type'} | Select-Object -ExpandProperty Key) == 1"
-        }
+        $Filter = $M365 ? "$($ColumnHeaders| Where-Object {$_.Value -eq 'Account Type'} | Select-Object -ExpandProperty Key) == 1" : ''
+
 
         $params = @{
             CoveMethod = 'EnumerateAccountStatistics'
             Params = @{
                 query = @{
                     PartnerId = $PartnerId ? $PartnerId : $Script:CoveApiSession.PartnerInfo.id
-                    SelectionMode = 'PerInstallation'
+                    RecordsCount = 1000
+                    SelectionMode = 'Merged'
+                    StartRecordNumber = 0
+                    Totals = @()
+                    Filter = $Filter
                     Columns = @(
                         foreach ($Column in $ColumnHeaders.GetEnumerator()) {
                             $Column.Key
@@ -52,12 +55,8 @@ function Get-CoveDeviceStatastic {
         }
 
 
-        if ($Filter) {
-            $params.Params.query.Filter = $Filter
-        }
 
         Write-Verbose "Getting devices statatistics for Partner '$($params.Params.query.PartnerId)' with filter $($params.Params.query.Filter)"
-
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
