@@ -28,33 +28,19 @@ function Get-CoveCompanies {
         $params = @{
             CoveMethod = 'EnumeratePartners'
             Params = @{
-                parentpartnerid = $ParenbtPartnerId ? $ParentPartnerId : (Get-CovePartnerInfo).Id
+                parentPartnerId = $PartnerId ? $PartnerId : $Script:CoveApiSession.PartnerInfo.id
                 fields = @(0,1,3,4,5,8,9,10,18,20)
-                fetchrecursively = $true
+                fetchRecursively = $true
             }
             Id = 'jsonrpc'
         }
 
-        $Companies = Invoke-CoveApiRequest @params
-        if ($Companies) {
-
-            $Data = foreach ($Company in $Companies) {
-                @{
-                    Name = $Company.0
-                    Level = $Company.1
-                    'Child Service Types' = $Company.3
-                    'Service Type' = $Company.4
-                    State = $Company.5
-                    'Location ID' = $Company.8
-                    'Flags' = $Company.9
-                    'Company Info' = $Company.10
-                    'ExternalCode, MailFrom' = $Company.18
-                    'Created Time' = $Company.20
-                }
-            }
-
-            return $Data
+        $Data = Invoke-CoveApiRequest @params
+        if ($Data) {
+            $Companies = $Data | Where-Object {$_.Level -ne 'Site'}
+            return $Companies
         }
+
         return $null
     }
 
