@@ -56,6 +56,7 @@ function Invoke-CoveApiRequest {
             UseBasicParsing = $true
             SessionVariable = 'CoveSession'
         }
+        Write-Debug "Sending request to $CoveMethod via $Method $($RequestParams | ConvertTo-Json -Depth 10)"
         try {
             $Request = Invoke-WebRequest @RequestParams
         }
