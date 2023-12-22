@@ -62,7 +62,7 @@ function Get-CoveDataMap {
             D19   = 'Microsoft 365 Exchange'
             D20   = 'Microsoft 365 OneDrive'
             D23   = 'Microsoft 365 Teams'
-            F00   = 'Last Session Status' #  1 – In process, 2 – Failed, 3 – Aborted, 5 – Completed, 6 – Interrupted, 7 – NotStarted, 8 – CompletedWithErrors, 9 – InProgressWithFaults, 10 – OverQuota, 11 – NoSelection, 12 – Restarted
+            F00   = 'Last Session Status' #  1 - In process, 2 - Failed, 3 - Aborted, 5 - Completed, 6 - Interrupted, 7 - NotStarted, 8 - CompletedWithErrors, 9 - InProgressWithFaults, 10 - OverQuota, 11 - NoSelection, 12 - Restarted
             F01   = 'Last Session Selected Count'
             F02   = 'Last Session Processed Count'
             F03   = 'Last Session Selected Size'
@@ -70,7 +70,7 @@ function Get-CoveDataMap {
             F05   = 'Last Session Sent Size'
             F06   = 'Last Session Errors Count'
             F07   = 'Protected size'
-            F08   = 'Color bar – last 28 days'
+            F08   = 'Color bar - last 28 days'
             F09   = 'Last successful session Timestamp'
             F10   = 'Pre Recent Session Selected Count'
             F11   = 'Pre Recent Session Selected Size'
@@ -114,12 +114,12 @@ function Get-CoveDataMap {
             I29   = 'Efficient Cabinet Count 26-50'
             I30   = 'Efficient Cabinet Count 50-75'
             I31   = 'Used Virtual Storage'
-            I32   = 'OS type' #  1 – workstation, 2 – server, 0 – undefined
-            I33   = 'Seeding mode' #  0 – Undefined, 1 – Normal, 2 – Seeding, 3 – PreSeeding, 4 – PostSeeding
+            I32   = 'OS type' #  1 - workstation, 2 - server, 0 - undefined
+            I33   = 'Seeding mode' #  0 - Undefined, 1 - Normal, 2 - Seeding, 3 - PreSeeding, 4 - PostSeeding
             I34   = 'Anti Crypto enabled'
-            I35   = 'LSV' #  0 – Disabled, 1 – Enabled
-            I36   = 'Storage status' #  2 – Offline, 1 – Failed, 0 – Undefined, 50 – Running, 100 – Synchronized
-            I37   = 'LSV status' #  2 – Offline, 1 – Failed, 0 – Undefined, 50 – Running, 100 – Synchronized
+            I35   = 'LSV' #  0 - Disabled, 1 - Enabled
+            I36   = 'Storage status' #  2 - Offline, 1 - Failed, 0 - Undefined, 50 - Running, 100 - Synchronized
+            I37   = 'LSV status' #  2 - Offline, 1 - Failed, 0 - Undefined, 50 - Running, 100 - Synchronized
             I38   = 'Archived size'
             I39   = 'Retention units'
             I40   = 'Activity description'
