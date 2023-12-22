@@ -16,9 +16,10 @@ function Get-CoveDeviceStatistic {
         # The ID of the partner to get devices for
         [Parameter()]
         [int]$PartnerId,
-        # Filter by M365 only
+        # Filter by type of account - Must be M365, Servers, or Workstations
         [Parameter()]
-        [switch]$M365
+        [ValidateSet('M365','Hardware')]
+        [string]$BackupType
     )
 
     begin {
@@ -30,8 +31,20 @@ function Get-CoveDeviceStatistic {
         $ColumnHeaders = Get-CoveDataMap -DataMap ColumnHeaders
         $DataSources = Get-CoveDataMap -DataMap DataSources
 
-        $Filter = $M365 ? "$($ColumnHeaders| Where-Object {$_.Value -eq 'Account Type'} | Select-Object -ExpandProperty Key) == 1" : ''
-
+        $Filter = ''
+        if ($BackupType) {
+            switch ($BackupType) {
+                'M365' {
+                    $TypeID = 2
+                }
+                'Hardware' {
+                    $TypeID = 1
+                }
+                default {
+                }
+            }
+            $Filter = "$($ColumnHeaders | Where-Object {$_.Value -eq 'Account Type'} | Select-Object -ExpandProperty Key) == $($TypeID)"
+        }
 
         $params = @{
             CoveMethod = 'EnumerateAccountStatistics'
@@ -60,10 +73,32 @@ function Get-CoveDeviceStatistic {
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            $DeviceStats = [System.Collections.ArrayList]@()
+            foreach ($Statistic in $Data) {
+                $DeviceStat = [PSCustomObject]@{
+                    PartnerId = $Statistic.PartnerId
+                    AccountId = $Statistic.AccountId
+                }
+                foreach ($Column in $ColumnHeaders.GetEnumerator()) {
+                    $Value = $Statistic.Settings.$($Column.Key) -join ''
+                    switch ($Column.Key) {
+                        'I78' {
+                            Write-Verbose "Getting data sources for $Value"
+                            $Sources =  $($Value -split 'D' | Where-Object { $_ -ne '' })
+                            $Value = foreach ($Source in $Sources) {
+                                Write-Verbose "Getting data source for D$Source"
+                                $DataSources.GetEnumerator() | Where-Object { $_.Key -eq "D$Source" } | Select-Object -ExpandProperty Value
+                            }
+                        }
+                    }
+                    $DeviceStat | Add-Member -MemberType NoteProperty -Name $Column.Value -Value $Value
+                }
+                $DeviceStats.Add($DeviceStat) | Out-Null
+            }
 
-            return $Data
+            return $DeviceStats
         }
-        Write-Error "Failed to get devices"
+        return $null
     }
 
     end {
