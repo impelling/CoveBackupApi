@@ -20,7 +20,12 @@ function New-CoveApiSession {
     }
 
     process {
-
+        # if the debug flag is set
+        if ($PSDebugContext) {
+            Write-Debug "Debug flag set, purging existing session"
+            Remove-Variable -Name CoveApiSession -Scope Script -Force
+            return
+        }
         if (Test-CoveApiVisa) {
             Write-Verbose "Visa found, no need to login"
             return
@@ -78,6 +83,14 @@ function New-CoveApiSession {
         $Script:CoveApiSession.validfrom = (Get-Date -Date "1970-01-01 00:00:00Z").ToUniversalTime().AddSeconds($Script:CoveApiSession.visa.split('-')[3])
 
         Write-Verbose "Login successful, visa valid from $($Script:CoveApiSession.validfrom)"
+
+        try {
+            $Script:CoveApiSession.PartnerInfo = Get-CovePartnerInfo
+            Write-Verbose "Partner $($Script:CoveApiSession.PartnerInfo.name) logged in with ID $($Script:CoveApiSession.PartnerInfo.id)"
+        }
+        catch {
+            Throw "Failed to get partner info: $($_.Exception.Message)"
+        }
 
     }
 
