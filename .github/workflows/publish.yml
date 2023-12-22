@@ -11,13 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: PowerShell script
+      - name: Build Module
         uses: Amadevus/pwsh-script@v2.0.3
         id: Build-Module
         with:
           script: |
             Install-Module ModuleBuilder -Force
-            Build-Module
+            Build-Module -Verbose
 
       - name: Update Metadata
         uses: natescherer/update-powershell-metadata-action@v2
