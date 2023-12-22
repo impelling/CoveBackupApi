@@ -4,4 +4,5 @@
     OutputDirectory = '..\Output\'
     VersiondOutputDirectory = $false
     CopyDirectories = @()
+    Prerelease = 'beta01'
 }

@@ -1,0 +1,32 @@
+name: Publish new version
+
+on:
+  push:
+    tags: '*'
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: PowerShell script
+        uses: Amadevus/pwsh-script@v2.0.3
+        id: Build-Module
+        with:
+          script: |
+            Install-Module ModuleBuilder -Force
+            Build-Module
+
+      - name: Update Metadata
+        uses: natescherer/update-powershell-metadata-action@v2
+        with:
+          path: .\Output\CoveBackupApi
+          version: ${{ github.ref_name }}
+
+      - name: Publish PowerShell Module
+        uses: pcgeek86/publish-powershell-module-action@v20
+        with:
+          modulePath: .\Output\CoveBackupApi
+          NuGetApiKey: ${{ secrets.POWERSHELL_GALLERY_KEY }}
