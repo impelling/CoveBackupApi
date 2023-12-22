@@ -11,6 +11,7 @@ function Get-CoveDeviceStatistic {
         Get-CoveDeviceStatistic -PartnerId 1234 -Verbose
         Gets devices from the Cove API for the partner with ID 1234
     #>
+    [OutputType([System.Collections.ArrayList])]
     [CmdletBinding()]
     param (
         # The ID of the partner to get devices for
@@ -96,7 +97,14 @@ function Get-CoveDeviceStatistic {
                 $DeviceStats.Add($DeviceStat) | Out-Null
             }
 
-            return $DeviceStats
+
+            function Get-CoveDeviceStatistic {
+                <# ...existing code... #>
+
+                end {
+                    return $DeviceStats
+                }
+            }
         }
         return $null
     }

@@ -8,6 +8,7 @@ function Test-CoveApiVisa {
         Test-CoveApiVisa -Verbose
         Uses the script's default credentials to test for a valid visa
     #>
+    [OutputType([bool])]
     [CmdletBinding()]
     param (
 
@@ -20,11 +21,11 @@ function Test-CoveApiVisa {
     process {
         if (!$Script:CoveApiSession) {
             Write-Verbose "No visa found"
-            return $null
+            return $false
         }
         if ($Script:CoveApiSession.validfrom -lt (Get-Date).AddMinutes(-10)) {
             Write-Verbose "Visa expired, valid until $(($Script:CoveApiSession.validfrom).AddMinutes(15))"
-            return $null
+            return $false
         }
         Write-Verbose "Visa found, valid until $(($Script:CoveApiSession.validfrom).AddMinutes(15))"
         return $true
