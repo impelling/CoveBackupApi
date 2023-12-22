@@ -29,4 +29,4 @@ jobs:
         uses: pcgeek86/publish-powershell-module-action@v20
         with:
           modulePath: .\Output\CoveBackupApi
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          NuGetApiKey: ${{ secrets.POWERSHELL_GALLERY_KEY }}
