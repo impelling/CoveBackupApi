@@ -37,14 +37,7 @@ function Get-CoveDevice {
             Id = 'jsonrpc'
         }
 
-        try {
-            $Data = Invoke-CoveApiRequest @params
-        }
-        catch {
-            Write-Error "Failed to get devices"
-            Write-Error $_.Exception.Message
-            return
-        }
+        $Data = Invoke-CoveApiRequest @params
         if ($Data) {
             if ($DeviceId) {
                 # This endpoint does not support API level filtering, so we'll simulate it with the results
