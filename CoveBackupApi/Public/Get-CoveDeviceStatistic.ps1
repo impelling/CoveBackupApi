@@ -84,10 +84,8 @@ function Get-CoveDeviceStatistic {
                     $Value = $Statistic.Settings.$($Column.Key) -join ''
                     switch ($Column.Key) {
                         'I78' {
-                            Write-Verbose "Getting data sources for $Value"
                             $Sources =  $($Value -split 'D' | Where-Object { $_ -ne '' })
                             $Value = foreach ($Source in $Sources) {
-                                Write-Verbose "Getting data source for D$Source"
                                 $DataSources.GetEnumerator() | Where-Object { $_.Key -eq "D$Source" } | Select-Object -ExpandProperty Value
                             }
                         }
@@ -97,14 +95,8 @@ function Get-CoveDeviceStatistic {
                 $DeviceStats.Add($DeviceStat) | Out-Null
             }
 
+            return $DeviceStats
 
-            function Get-CoveDeviceStatistic {
-                <# ...existing code... #>
-
-                end {
-                    return $DeviceStats
-                }
-            }
         }
         return $null
     }
