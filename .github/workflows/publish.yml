@@ -17,7 +17,7 @@ jobs:
         with:
           script: |
             Install-Module ModuleBuilder -Force
-            Build-Module -Verbose
+            Build-Module -VersionedOutputDirectory:$false
 
       - name: Update Metadata
         uses: natescherer/update-powershell-metadata-action@v2
