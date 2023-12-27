@@ -1,4 +1,4 @@
-function Get-CoveCompanies {
+function Get-CoveCompany {
     <#
     .SYNOPSIS
         Gets companies from the Cove API
@@ -9,17 +9,23 @@ function Get-CoveCompanies {
     .PARAMETER Sites
         Whether to return only sites, default is to return companies
     .EXAMPLE
-        Get-CoveCompanies -Verbose
+        Get-CoveCompany -Verbose
         Gets companies from the Cove API
     .EXAMPLE
-        Get-CoveCompanies -ParentPartnerId 123456 -Verbose
+        Get-CoveCompany -ParentPartnerId 123456 -Verbose
         Gets companies from the Cove API, where the parent partner ID is 123456
+    .EXAMPLE
+        Get-CoveCompany -CompanyId 123456 -Verbose
+        Gets the company with ID 123456 from the Cove API
     #>
     [CmdletBinding()]
     param (
         # The ID of the partner to get companies for
         [Parameter()]
         [int]$ParentPartnerId,
+        # The ID of the company to get
+        [Parameter()]
+        [int]$CompanyId,
         # Whether to return only sites, default is to return companies
         [Parameter()]
         [switch]$Sites
@@ -42,6 +48,10 @@ function Get-CoveCompanies {
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            if ($CompanyId) {
+                # This endpoint does not support filtering by ID, so we have to do it ourselves
+                return $Data | Where-Object {$_.Id -eq $CompanyId}
+            }
             if ($Sites) {
                 return $Data | Where-Object {$_.Level -eq 'Site'}
             }
@@ -50,7 +60,6 @@ function Get-CoveCompanies {
             }
         }
 
-        return $null
     }
 
     end {
