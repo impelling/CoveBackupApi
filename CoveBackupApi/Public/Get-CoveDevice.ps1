@@ -1,0 +1,61 @@
+function Get-CoveDevice {
+    <#
+    .SYNOPSIS
+        Gets devices from the Cove API
+    .DESCRIPTION
+        Gets devices from the Cove API, using the credentials stored in the script
+    .EXAMPLE
+        Get-CoveDevice -Verbose
+        Gets all devices from the Cove API
+    .EXAMPLE
+        Get-CoveDevice -PartnerId 1234 -Verbose
+        Gets devices from the Cove API for the partner with ID 1234
+    .EXAMPLE
+        Get-CoveDevice -DeviceId 1234 -Verbose
+        Gets the device with ID 1234 from the Cove API
+    #>
+    [CmdletBinding()]
+    param (
+        # The ID of the device to get
+        [Parameter()]
+        [int]$DeviceId,
+        # The ID of the partner to get devices for
+        [Parameter()]
+        [int]$PartnerId
+    )
+
+    begin {
+
+    }
+
+    process {
+        $params = @{
+            CoveMethod = 'EnumerateAccounts'
+            Params = @{
+                partnerId = $PartnerId ? $PartnerId : $Script:CoveApiSession.PartnerInfo.id
+            }
+            Id = 'jsonrpc'
+        }
+
+        try {
+            $Data = Invoke-CoveApiRequest @params
+        }
+        catch {
+            Write-Error "Failed to get devices"
+            Write-Error $_.Exception.Message
+            return
+        }
+        if ($Data) {
+            if ($DeviceId) {
+                # This endpoint does not support API level filtering, so we'll simulate it with the results
+                $Data = $Data | Where-Object { $_.Id -eq $DeviceId }
+            }
+            return $Data
+        }
+        Write-Warning "Failed to get devices"
+    }
+
+    end {
+
+    }
+}
