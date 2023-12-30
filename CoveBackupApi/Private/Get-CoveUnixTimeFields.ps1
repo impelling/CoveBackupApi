@@ -9,6 +9,7 @@ function Get-CoveUnixTimeFields {
         Returns the Unix fields for the Cove API
     #>
     [CmdletBinding()]
+    [OutputType([System.Object[]])]
     param (
 
     )

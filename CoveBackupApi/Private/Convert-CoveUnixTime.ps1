@@ -34,7 +34,7 @@ function Convert-CoveUnixTime {
             return $Epoch.AddSeconds($UnixTime)
         }
         elseif ($DateTime) {
-            return [int]($DateTime - $Epoch).TotalSeconds
+            return ($DateTime - $Epoch).TotalSeconds
         }
     }
 
