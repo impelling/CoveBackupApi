@@ -74,23 +74,34 @@ function Get-CoveDeviceStatistic {
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            $UnixTimeFields = Get-CoveUnixTimeFields
             $DeviceStats = [System.Collections.ArrayList]@()
             foreach ($Statistic in $Data) {
                 $DeviceStat = [PSCustomObject]@{
                     PartnerId = $Statistic.PartnerId
                     AccountId = $Statistic.AccountId
                 }
-                foreach ($Column in $ColumnHeaders.GetEnumerator()) {
-                    $Value = $Statistic.Settings.$($Column.Key) -join ''
-                    switch ($Column.Key) {
-                        'I78' {
-                            $Sources =  $($Value -split 'D' | Where-Object { $_ -ne '' })
-                            $Value = foreach ($Source in $Sources) {
-                                $DataSources.GetEnumerator() | Where-Object { $_.Key -eq "D$Source" } | Select-Object -ExpandProperty Value
+                foreach ($Setting in $Statistic.Settings.GetEnumerator()) {
+                    foreach ($Property in $Setting.psobject.Properties) {
+                        if ($Property.Name -in $UnixTimeFields) {
+                            $Value = Convert-CoveUnixTime -UnixTime $Property.Value
+                        }
+                        else {
+                            switch ($Property.Name) {
+                                'I78' { # Data sources new column code
+                                    $Sources =  $($Setting.Value -split 'D' | Where-Object { $_ -ne '' })
+                                    $Value = foreach ($Source in $Sources) {
+                                        $DataSources.GetEnumerator() | Where-Object { $_.Key -eq "D$Source" } | Select-Object -ExpandProperty Value
+                                    }
+                                }
+                                default {
+                                    $Value = $Property.Value
+                                }
                             }
                         }
+                        $ColumnName = $ColumnHeaders.GetEnumerator() | Where-Object { $_.Key -eq $Property.Name } | Select-Object -ExpandProperty Value
+                        $DeviceStat | Add-Member -MemberType NoteProperty -Name $ColumnName -Value $Value
                     }
-                    $DeviceStat | Add-Member -MemberType NoteProperty -Name $Column.Value -Value $Value
                 }
                 $DeviceStats.Add($DeviceStat) | Out-Null
             }
