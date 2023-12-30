@@ -48,6 +48,15 @@ function Get-CoveCompany {
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            $UnixTimeFields = Get-CoveUnixTimeFields
+            foreach ($Company in $Data.GetEnumerator()) {
+                foreach ($Property in $Company.psobject.Properties) {
+                    if ($Property.Name -in $UnixTimeFields) {
+                        $Property.Value = Convert-CoveUnixTime -UnixTime $Property.Value
+                    }
+                }
+            }
+
             if ($CompanyId) {
                 # This endpoint does not support filtering by ID, so we have to do it ourselves
                 return $Data | Where-Object {$_.Id -eq $CompanyId}
