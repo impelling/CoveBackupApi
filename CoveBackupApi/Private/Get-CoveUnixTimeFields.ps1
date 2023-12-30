@@ -20,6 +20,7 @@ function Get-CoveUnixTimeFields {
     process {
         $UnixTimeFields = @(
             'CreationTime',
+            'ExpirationTime',
             'TrialExpirationTime',
             'TrialRegistrationTime',
             'Timestamp',
