@@ -39,6 +39,14 @@ function Get-CoveDevice {
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            $UnixTimeFields = Get-CoveUnixTimeFields
+            foreach ($Device in $Data.GetEnumerator()) {
+                foreach ($Property in $Device.psobject.Properties) {
+                    if ($Property.Name -in $UnixTimeFields) {
+                        $Property.Value = Convert-CoveUnixTime -UnixTime $Property.Value
+                    }
+                }
+            }
             if ($DeviceId) {
                 # This endpoint does not support API level filtering, so we'll simulate it with the results
                 $Data = $Data | Where-Object { $_.Id -eq $DeviceId }
