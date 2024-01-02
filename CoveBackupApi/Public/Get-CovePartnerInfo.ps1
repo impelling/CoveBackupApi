@@ -26,6 +26,11 @@ function Get-CovePartnerInfo {
         }
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
+            foreach ($Property in $Data.psobject.Properties) {
+                if ($Property.Name -in $UnixTimeFields) {
+                    $Property.Value = Convert-CoveUnixTime -UnixTime $Property.Value
+                }
+            }
             return $Data
         }
         Throw "Failed to get partner info"
