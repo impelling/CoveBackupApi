@@ -31,6 +31,7 @@ function Get-CoveDeviceStatistic {
 
         $ColumnHeaders = Get-CoveDataMap -DataMap ColumnHeaders
         $DataSources = Get-CoveDataMap -DataMap DataSources
+        $StatsFields = Get-CoveDataMap -DataMap StatsFields
 
         $Filter = ''
         if ($BackupType) {
@@ -47,6 +48,17 @@ function Get-CoveDeviceStatistic {
             $Filter = "$($ColumnHeaders | Where-Object {$_.Value -eq 'Account Type'} | Select-Object -ExpandProperty Key) == $($TypeID)"
         }
 
+        $Columns = @(
+            foreach ($Column in $ColumnHeaders.GetEnumerator()) {
+                $Column.Key
+            }
+            foreach ($Source in $DataSources.GetEnumerator()) {
+                foreach ($Field in $StatsFields.GetEnumerator()) {
+                    "$($Source.Key)$($Field.Key)"
+                }
+            }
+        )
+
         $params = @{
             CoveMethod = 'EnumerateAccountStatistics'
             Params = @{
@@ -57,11 +69,7 @@ function Get-CoveDeviceStatistic {
                     StartRecordNumber = 0
                     Totals = @()
                     Filter = $Filter
-                    Columns = @(
-                        foreach ($Column in $ColumnHeaders.GetEnumerator()) {
-                            $Column.Key
-                        }
-                    )
+                    Columns = $Columns
                     OrderBy = "$(Get-CoveDataMap -FieldName 'Company Name') ASC"
                 }
             }
@@ -100,6 +108,14 @@ function Get-CoveDeviceStatistic {
                             }
                         }
                         $ColumnName = $ColumnHeaders.GetEnumerator() | Where-Object { $_.Key -eq $Property.Name } | Select-Object -ExpandProperty Value
+                        if (!$ColumnName) {
+                            $Keys = $Property.Name -split 'F'
+                            $Keys[1] = "F$($Keys[1])"
+                            $Source = $DataSources.GetEnumerator() | Where-Object { $_.Key -eq $Keys[0] } | Select-Object -ExpandProperty Value
+                            $Field = $StatsFields.GetEnumerator() | Where-Object { $_.Key -eq $Keys[1] } | Select-Object -ExpandProperty Value
+                            $ColumnName = "$Source $Field"
+                        }
+                        $ColumnName = $ColumnName ? $ColumnName : $Property.Name
                         $DeviceStat | Add-Member -MemberType NoteProperty -Name $ColumnName -Value $Value
                     }
                 }
