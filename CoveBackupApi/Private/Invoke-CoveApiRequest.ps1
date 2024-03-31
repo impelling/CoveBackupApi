@@ -36,7 +36,7 @@ function Invoke-CoveApiRequest {
 
     begin {
         if (!(Test-CoveApiVisa)) {
-                        New-CoveApiSession
+            New-CoveApiSession
         }
 
     }

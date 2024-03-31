@@ -23,7 +23,7 @@ function Test-CoveApiVisa {
             Write-Verbose "No visa found"
             return $false
         }
-        if ($Script:CoveApiSession.validfrom -lt (Get-Date).AddMinutes(-10)) {
+        if ($Script:CoveApiSession.validfrom -lt (Get-Date).ToUniversalTime().AddMinutes(-10)) {
             Write-Verbose "Visa expired, valid until $(($Script:CoveApiSession.validfrom).AddMinutes(15))"
             return $false
         }
