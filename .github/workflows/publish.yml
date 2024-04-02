@@ -22,7 +22,7 @@ jobs:
       - name: Update Metadata
         uses: natescherer/update-powershell-metadata-action@v2
         with:
-          path: .\Output\CoveBackupApi\CoveBackupApi.psd1
+          path: Output\CoveBackupApi\CoveBackupApi.psd1
           version: ${{ github.ref_name }}
 
       - name: Publish PowerShell Module
