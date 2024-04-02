@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/impelling/CoveBackupApi?style=for-the-badge)](https://github.com/impelling/CoveBackupApi/blob/main/LICENSE.md)
 [![Stable Release](https://img.shields.io/powershellgallery/v/CoveBackupApi?label=Stable+Release&style=for-the-badge)](https://www.powershellgallery.com/packages/CoveBackupApi/)
 [![Preview Release](https://img.shields.io/powershellgallery/v/CoveBackupApi?include_prereleases&label=Preview%20Release&style=for-the-badge)](https://www.powershellgallery.com/packages/CoveBackupApi/)
-[![Publish Status](https://github.com/impelling/CoveBackupApi/actions/publish.yml&style=for-the-badge)](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml)
+[![Publish Status](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml/badge.svg?style=for-the-badge)](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml)
 
 
 ## About this repoistory
