@@ -17,12 +17,12 @@ jobs:
         with:
           script: |
             Install-Module ModuleBuilder -Force
-            Build-Module -VersionedOutputDirectory:$false
+            Build-Module
 
       - name: Update Metadata
         uses: natescherer/update-powershell-metadata-action@v2
         with:
-          path: Output\CoveBackupApi\CoveBackupApi.psd1
+          path: .\Output\CoveBackupApi
           version: ${{ github.ref_name }}
 
       - name: Publish PowerShell Module
