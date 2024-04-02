@@ -3,5 +3,4 @@
     # Relative paths below here relate to the module root manifest
     OutputDirectory = '..\Output\'
     CopyDirectories = @()
-    Prerelease = 'alpha01'
 }
