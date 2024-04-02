@@ -1,8 +1,10 @@
 # CoveBackupApi - A [Cove Backup](https://www.n-able.com/products/cove-data-protection/backup) [PowerShell](https://microsoft.com/powershell) module
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/CoveBackupApi?style=for-the-badge)](https://www.powershellgallery.com/packages/CoveBackupApi/)
-[![License](https://img.shields.io/github/license/impelling/CoveBackupApi?style=for-the-badge)](https://github.com/impelling/CoveBackupApi/blob/main/README.md)
+[![License](https://img.shields.io/github/license/impelling/CoveBackupApi?style=for-the-badge)](https://github.com/impelling/CoveBackupApi/blob/main/LICENSE.md)
 [![Stable Release](https://img.shields.io/powershellgallery/v/CoveBackupApi?label=Stable+Release&style=for-the-badge)](https://www.powershellgallery.com/packages/CoveBackupApi/)
 [![Preview Release](https://img.shields.io/powershellgallery/v/CoveBackupApi?include_prereleases&label=Preview%20Release&style=for-the-badge)](https://www.powershellgallery.com/packages/CoveBackupApi/)
+[![Publish Status](https://github.com/impelling/CoveBackupApi/actions/publish.yml&style=for-the-badge)](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml)
+
 
 ## About this repoistory
 
