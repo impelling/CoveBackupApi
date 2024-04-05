@@ -7,8 +7,9 @@ function Test-CoveApiVisa {
     .EXAMPLE
         Test-CoveApiVisa -Verbose
         Uses the script's default credentials to test for a valid visa
+    .OUTPUTS
+        System.Boolean
     #>
-    [OutputType([bool])]
     [CmdletBinding()]
     param (
 

@@ -9,6 +9,8 @@ function Get-CoveCompanyInfo {
     .EXAMPLE
         Get-CoveCompanyInfo -CompanyId 12345 -Verbose
         Gets information for the company with ID 12345 from the Cove API
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
     #>
     [CmdletBinding()]
     param (

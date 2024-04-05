@@ -10,6 +10,8 @@ function Get-CoveDeviceStatistic {
     .EXAMPLE
         Get-CoveDeviceStatistic -PartnerId 1234 -Verbose
         Gets devices from the Cove API for the partner with ID 1234
+    .OUTPUTS
+        System.Collections.ArrayList
     #>
     [OutputType([System.Collections.ArrayList])]
     [CmdletBinding()]

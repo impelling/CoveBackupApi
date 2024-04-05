@@ -29,6 +29,8 @@ function New-CoveApiCredential {
         }
         New-CoveApiCredential @creds
         Overrides the default URL for the Cove API and stores the required attributes for the Cove API to use in future calls
+    .OUTPUTS
+        None
 
     #>
 

@@ -20,6 +20,8 @@ function Get-CoveDataMap {
     .EXAMPLE
         Get-CoveDataMap -FieldName 'Hyper-V'
         Returns the column ID for the Hyper-V field (D14)
+    .OUTPUTS
+        System.Collections.Hashtable
     #>
 
 

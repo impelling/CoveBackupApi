@@ -4,19 +4,17 @@ function Get-CoveCompany {
         Gets companies from the Cove API
     .DESCRIPTION
         Gets companies from the Cove API, using the credentials stored in the script
-    .PARAMETER ParentPartnerId
-        The ID of the partner to get companies for
-    .PARAMETER Sites
-        Whether to return only sites, default is to return companies
     .EXAMPLE
         Get-CoveCompany -Verbose
-        Gets companies from the Cove API
+        Gets all companies from the Cove API
     .EXAMPLE
         Get-CoveCompany -ParentPartnerId 123456 -Verbose
         Gets companies from the Cove API, where the parent partner ID is 123456
     .EXAMPLE
         Get-CoveCompany -CompanyId 123456 -Verbose
         Gets the company with ID 123456 from the Cove API
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
     #>
     [CmdletBinding()]
     param (

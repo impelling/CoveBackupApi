@@ -7,6 +7,8 @@ function Get-CoveUnixTimeFields {
     .EXAMPLE
         Get-CoveUnixFields -Verbose
         Returns the Unix fields for the Cove API
+    .OUTPUTS
+        System.Object[]
     #>
     [CmdletBinding()]
     [OutputType([System.Object[]])]
