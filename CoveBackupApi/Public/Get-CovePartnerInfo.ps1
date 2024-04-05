@@ -7,6 +7,8 @@ function Get-CovePartnerInfo {
     .EXAMPLE
         Get-CovePartnerInfo -Verbose
         Gets the partner information for the Cove API
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
     #>
     [CmdletBinding()]
     param (

@@ -25,7 +25,7 @@ Gets companies from the Cove API, using the credentials stored in the script
 ### EXAMPLE 1
 ```
 Get-CoveCompany -Verbose
-Gets companies from the Cove API
+Gets all companies from the Cove API
 ```
 
 ### EXAMPLE 2
@@ -109,6 +109,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject
 ## NOTES
 
 ## RELATED LINKS

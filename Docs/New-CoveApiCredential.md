@@ -160,6 +160,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### None
 ## NOTES
 
 ## RELATED LINKS

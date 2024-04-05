@@ -114,6 +114,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.DateTime or
+### System.Int32 unix timestamp
 ## NOTES
 
 ## RELATED LINKS

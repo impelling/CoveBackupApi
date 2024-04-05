@@ -3,14 +3,21 @@ function Invoke-CoveApiRequest {
     .SYNOPSIS
         Performs a request to the Cove API
     .DESCRIPTION
-
-    .NOTES
-        Information or caveats about the function e.g. 'This function is not supported in Linux'
-    .LINK
-        Specify a URI to a help page, this will show when Get-Help -Online is used.
+        A private function, will invoke a request to the Cove API when used within the CoveBackupApi module
     .EXAMPLE
-        Test-MyTestFunction -Verbose
-        Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
+        $params = @{
+            CoveMethod = 'EnumeratePartners'
+            Params = @{
+                parentPartnerId = 123456
+                fields = @(0,1,3,4,5,8,9,10,18,20)
+                fetchRecursively = $true
+            }
+            Id = 'jsonrpc'
+        }
+        $CoveCompanies = Invoke-CoveApiRequest @params
+        Gets all companies from the Cove API where the Partner ID is 123456
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
     #>
 
 
