@@ -98,7 +98,7 @@
             Tags = @(
                 'Cove',
                 'N-Able',
-                'Cove Backup'
+                'CoveBackup'
             )
 
             # A URL to the license for this module.
