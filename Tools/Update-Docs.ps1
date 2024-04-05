@@ -1,6 +1,8 @@
-$ModuleName = "CoveBackupApi"
-Build-Module -VersionedOutputDirectory:$false
-Remove-Module $ModuleName -Force -ErrorAction SilentlyContinue
-Import-Module .\Output\$ModuleName\$ModuleName.psm1
+# Get the tools directory from this script
+$ScriptPath = $MyInvocation.MyCommand.Path
+$ToolsDirectory = Split-Path $ScriptPath
+
+. (Join-Path $ToolsDirectory Invoke-BuildAndImport.ps1)
+
 Write-Output "Generating markdown help files"
 Get-Module $ModuleName | New-MarkdownHelp -OutputFolder .\Docs\ -Force

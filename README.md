@@ -6,7 +6,7 @@
 [![Publish Status](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml/badge.svg?style=for-the-badge)](https://github.com/impelling/CoveBackupApi/actions/workflows/publish.yml)
 
 
-## About this repoistory
+## About this repository
 
 This is the code for a Powershell module to interact with the Cove backup API.
 
@@ -43,3 +43,7 @@ $script:ApiParams = @{
 New-CoveApiCredential @script:ApiParams
 New-CoveApiSession -Verbose
 ```
+
+## Functions
+
+All functions are documented in the Docs directory within the project repo.
