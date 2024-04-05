@@ -9,24 +9,12 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.2
 
-      - name: Build Module
-        uses: Amadevus/pwsh-script@v2.0.3
-        id: Build-Module
+      - name: Build, update and publish module
+        uses: impelling/powershell-module-action@0.0.1
+        id: Process-module
         with:
-          script: |
-            Install-Module ModuleBuilder -Force
-            Build-Module -VersionedOutputDirectory:$false
-
-      - name: Update Metadata
-        uses: natescherer/update-powershell-metadata-action@v2
-        with:
-          path: .\Output\CoveBackupApi
-          version: ${{ github.ref_name }}
-
-      - name: Publish PowerShell Module
-        uses: pcgeek86/publish-powershell-module-action@v20
-        with:
-          modulePath: .\Output\CoveBackupApi
-          NuGetApiKey: ${{ secrets.POWERSHELL_GALLERY_KEY }}
+          PSGalleryKey: ${{ secrets.POWERSHELL_GALLERY_KEY }}
+          Version: ${{ github.ref_name }}
+          Publish: true
