@@ -8,7 +8,7 @@
 
 ## About this repository
 
-This is the code for a Powershell module to interact with the Cove backup API.
+This is the code for a Powershell module to interact with the Cove backup API. It is not affiliated with N-Able or Cove Backup in any way.
 
 It is written purely for [PowerShell 7.1](https://docs.microsoft.com/en-us/powershell/scripting/whats-new/what-s-new-in-powershell-71?view=powershell-7.1) or greater. No apologies will be made for failures in Powershell 5.1.
 
