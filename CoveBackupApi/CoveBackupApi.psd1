@@ -95,16 +95,20 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags = @(
+                'Cove',
+                'N-Able',
+                'Cove Backup'
+            )
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri = 'https://github.com/impelling/CoveBackupApi/blob/main/LICENSE.md'
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/impelling/CoveBackupApi'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://www.n-able.com/wp-content/uploads/2022/12/icon-cove-128x128-fullcolor.svg'
 
             # ReleaseNotes of this module
             # ReleaseNotes = ''
