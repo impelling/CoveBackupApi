@@ -13,6 +13,8 @@ function Get-CoveDevice {
     .EXAMPLE
         Get-CoveDevice -DeviceId 1234 -Verbose
         Gets the device with ID 1234 from the Cove API
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
     #>
     [CmdletBinding()]
     param (

@@ -7,6 +7,8 @@ function New-CoveApiSession {
     .EXAMPLE
         New-CoveApiSession -Verbose
         Initiates a login session with the Cove API and outputs the result to the console
+    .OUTPUTS
+        None
     #>
 
 

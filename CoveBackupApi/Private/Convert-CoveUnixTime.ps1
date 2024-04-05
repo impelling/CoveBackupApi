@@ -7,6 +7,9 @@ function Convert-CoveUnixTime {
     .EXAMPLE
         Convert-CoveUnixTime -UnixTime 1685522071
         Converts the unix timestamp 1685522071 to a DateTime object
+    .OUTPUTS
+        System.DateTime or
+        System.Int32 unix timestamp
     #>
 
 
