@@ -93,7 +93,8 @@ function Get-CoveDeviceStatistic {
                 }
                 foreach ($Setting in $Statistic.Settings.GetEnumerator()) {
                     foreach ($Property in $Setting.psobject.Properties) {
-                        if ($Property.Name -in $UnixTimeFields) {
+                        $NameSubstring = $Property.Name.Length -gt 3 ? $Property.Name.Substring($Property.Name.Length - 3) : $null
+                        if ($Property.Name -is [string] -and ($Property.Name -in $UnixTimeFields -or ($NameSubstring -in $UnixTimeFields))) {
                             $Value = Convert-CoveUnixTime -UnixTime $Property.Value
                         }
                         else {
@@ -109,7 +110,12 @@ function Get-CoveDeviceStatistic {
                                 }
                             }
                         }
-                        $ColumnName = $ColumnHeaders.GetEnumerator() | Where-Object { $_.Key -eq $Property.Name } | Select-Object -ExpandProperty Value
+                        try {
+                            $ColumnName = $ColumnHeaders.GetEnumerator() | Where-Object { $_.Key -eq $Property.Name } | Select-Object -ExpandProperty Value
+                        }
+                        catch {
+                            $ColumnName = $null
+                        }
                         if (!$ColumnName) {
                             $Keys = $Property.Name -split 'F'
                             $Keys[1] = "F$($Keys[1])"
