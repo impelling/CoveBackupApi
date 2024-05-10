@@ -34,6 +34,7 @@ function Get-CoveDeviceStatistic {
         $ColumnHeaders = Get-CoveDataMap -DataMap ColumnHeaders
         $DataSources = Get-CoveDataMap -DataMap DataSources
         $StatsFields = Get-CoveDataMap -DataMap StatsFields
+        $StatusMap = Get-CoveBackupStatusMap
 
         $Filter = ''
         if ($BackupType) {
@@ -120,7 +121,6 @@ function Get-CoveDeviceStatistic {
                             $ColumnName = $null
                         }
                         if (!$ColumnName) {
-                            Write-Debug "    Building column name for $($Property.Name) using data sources and stats fields"
                             $Keys = $Property.Name -split 'F'
                             $Keys[1] = "F$($Keys[1])"
                             $Source = $DataSources.GetEnumerator() | Where-Object { $_.Key -eq $Keys[0] } | Select-Object -ExpandProperty Value
@@ -129,6 +129,11 @@ function Get-CoveDeviceStatistic {
                                 Write-Debug "    - Creating new object for $Source with $Field"
                                 # add a new pscustomobject to the device stat object
                                 $DeviceStat | Add-Member -MemberType NoteProperty -Name $Source -Value ([PSCustomObject]@{})
+                            }
+                            if ($Field -like '* Session Status') {
+                                if ($Value -in $StatusMap.Keys) {
+                                    $Value = $StatusMap.[int]$Value
+                                }
                             }
                             Write-Debug "    - Adding new note to $Source for $Field"
                             $DeviceStat.$Source | Add-Member -MemberType NoteProperty -Name $Field -Value $Value

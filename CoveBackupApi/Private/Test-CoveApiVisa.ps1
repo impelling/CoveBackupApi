@@ -10,6 +10,7 @@ function Test-CoveApiVisa {
     .OUTPUTS
         System.Boolean
     #>
+    [OutputType([System.Boolean])]
     [CmdletBinding()]
     param (
 
