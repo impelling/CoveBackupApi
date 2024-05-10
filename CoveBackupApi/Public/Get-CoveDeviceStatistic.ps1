@@ -89,8 +89,10 @@ function Get-CoveDeviceStatistic {
             $DeviceStats = [System.Collections.ArrayList]@()
             foreach ($Statistic in $Data) {
                 $DeviceStat = [PSCustomObject]@{
-                    PartnerId = $Statistic.PartnerId
-                    AccountId = $Statistic.AccountId
+                    Information = [PSCustomObject]@{
+                        PartnerId = $Statistic.PartnerId
+                        AccountId = $Statistic.AccountId
+                    }
                 }
                 foreach ($Setting in $Statistic.Settings.GetEnumerator()) {
                     Write-Debug "Processing setting $($Setting.Key)"
@@ -141,7 +143,7 @@ function Get-CoveDeviceStatistic {
                         }
                         $ColumnName = $ColumnName ? $ColumnName : $Property.Name
                         Write-Debug "    Column name for $($Property.Name) is $ColumnName"
-                        $DeviceStat | Add-Member -MemberType NoteProperty -Name $ColumnName -Value $Value
+                        $DeviceStat.Information | Add-Member -MemberType NoteProperty -Name $ColumnName -Value $Value
                     }
                 }
                 $DeviceStats.Add($DeviceStat) | Out-Null
