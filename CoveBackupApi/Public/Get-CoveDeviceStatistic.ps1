@@ -80,7 +80,7 @@ function Get-CoveDeviceStatistic {
 
 
 
-        Write-Verbose "Getting devices statatistics for Partner '$($params.Params.query.PartnerId)' with filter $($params.Params.query.Filter)"
+        Write-Verbose "Getting devices statatistics for Partner '$($params.Params.query.PartnerId)'"
 
         $Data = Invoke-CoveApiRequest @params
         if ($Data) {
@@ -92,7 +92,9 @@ function Get-CoveDeviceStatistic {
                     AccountId = $Statistic.AccountId
                 }
                 foreach ($Setting in $Statistic.Settings.GetEnumerator()) {
+                    Write-Debug "Processing setting $($Setting.Key)"
                     foreach ($Property in $Setting.psobject.Properties) {
+                        Write-Debug "- Processing property $($Property.Name)"
                         $NameSubstring = $Property.Name.Length -gt 3 ? $Property.Name.Substring($Property.Name.Length - 3) : $null
                         if ($Property.Name -is [string] -and ($Property.Name -in $UnixTimeFields -or ($NameSubstring -in $UnixTimeFields))) {
                             $Value = Convert-CoveUnixTime -UnixTime $Property.Value
@@ -111,19 +113,29 @@ function Get-CoveDeviceStatistic {
                             }
                         }
                         try {
+                            Write-Debug "  - Getting column name for $($Property.Name) from column headers"
                             $ColumnName = $ColumnHeaders.GetEnumerator() | Where-Object { $_.Key -eq $Property.Name } | Select-Object -ExpandProperty Value
                         }
                         catch {
                             $ColumnName = $null
                         }
                         if (!$ColumnName) {
+                            Write-Debug "    Building column name for $($Property.Name) using data sources and stats fields"
                             $Keys = $Property.Name -split 'F'
                             $Keys[1] = "F$($Keys[1])"
                             $Source = $DataSources.GetEnumerator() | Where-Object { $_.Key -eq $Keys[0] } | Select-Object -ExpandProperty Value
                             $Field = $StatsFields.GetEnumerator() | Where-Object { $_.Key -eq $Keys[1] } | Select-Object -ExpandProperty Value
-                            $ColumnName = "$Source $Field"
+                            if (-not ($DeviceStat | Get-Member $Source)) {
+                                Write-Debug "    - Creating new object for $Source with $Field"
+                                # add a new pscustomobject to the device stat object
+                                $DeviceStat | Add-Member -MemberType NoteProperty -Name $Source -Value ([PSCustomObject]@{})
+                            }
+                            Write-Debug "    - Adding new note to $Source for $Field"
+                            $DeviceStat.$Source | Add-Member -MemberType NoteProperty -Name $Field -Value $Value
+                            continue
                         }
                         $ColumnName = $ColumnName ? $ColumnName : $Property.Name
+                        Write-Debug "    Column name for $($Property.Name) is $ColumnName"
                         $DeviceStat | Add-Member -MemberType NoteProperty -Name $ColumnName -Value $Value
                     }
                 }
