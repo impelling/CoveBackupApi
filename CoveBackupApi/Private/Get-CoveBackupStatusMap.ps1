@@ -17,7 +17,7 @@ function Get-CoveBackupStatusMap {
         System.Collections.Hashtable
     #>
 
-
+    [OutputType([System.Collections.Hashtable])]
     [CmdletBinding()]
     param (
         # Get the column header for a specific field name
